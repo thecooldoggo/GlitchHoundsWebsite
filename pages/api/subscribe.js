@@ -53,7 +53,6 @@ export default async function handler(req, res) {
       ID.unique(),
       {
         email,
-        createdAt: new Date().toISOString(),
       }
     );
 

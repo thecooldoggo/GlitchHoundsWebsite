@@ -47,7 +47,6 @@ export default async function handler(req, res) {
         name,
         email,
         message,
-        createdAt: new Date().toISOString(),
       }
     );
 
