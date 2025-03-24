@@ -1,2 +1,21 @@
-npm init -y
-npm install appwrite
+{
+    "name": "glitch-hounds-website",
+    "version": "1.0.0",
+    "description": "Professional Fortnite map creation service using UEFN",
+    "main": "index.html",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+      "UEFN",
+      "Fortnite",
+      "Creative",
+      "map",
+      "development"
+    ],
+    "author": "Glitch Hounds",
+    "license": "ISC",
+    "dependencies": {
+      "appwrite": "^11.0.0"
+    }
+  }
