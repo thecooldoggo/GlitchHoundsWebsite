@@ -147,20 +147,20 @@ document.addEventListener('DOMContentLoaded', function() {
             addRippleEffect(submitButton);
             
             try {
-                const response = await fetch('/pages/api/contact.js', {
+                const response = await fetch('/api/contact', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({ name, email, message }),
                 });
-    
+
                 const data = await response.json();
                 
                 if (response.ok) {
                     contactForm.reset();
                     submitButton.innerHTML = '<i class="fas fa-check mr-2"></i> Message Sent!';
-                    showFluentNotification(`Your message has been sent successfully at ${new Date(data.submittedAt).toLocaleString()}!`, 'success');
+                    showFluentNotification('Your message has been sent successfully!', 'success');
                 } else {
                     showFluentNotification(data.error || 'Failed to send message', 'error');
                     submitButton.innerHTML = originalButtonText;
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
             addRippleEffect(submitButton);
             
             try {
-                const response = await fetch('/pages/api/subscribe.js', {
+                const response = await fetch('/api/subscribe', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 if (response.ok) {
                     emailInput.value = '';
-                    showFluentNotification(`You have been subscribed successfully at ${new Date(data.submittedAt).toLocaleString()}!`, 'success');
+                    showFluentNotification('You have been subscribed successfully!', 'success');
                 } else {
                     showFluentNotification(data.error || 'Failed to subscribe', 'error');
                 }

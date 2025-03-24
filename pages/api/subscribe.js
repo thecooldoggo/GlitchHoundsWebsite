@@ -1,29 +1,42 @@
-import { Client, Databases, ID, Query } from "appwrite";
+import { Client, Databases, ID, Query } from "node-appwrite";
 
 export default async function handler(req, res) {
-  // Check if method is POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    // Initialize Appwrite client
+    const requiredEnvVars = [
+      'APPWRITE_ENDPOINT',
+      'APPWRITE_PROJECT_ID',
+      'APPWRITE_API_KEY',
+      'APPWRITE_DATABASE_ID',
+      'APPWRITE_SUBSCRIBERS_COLLECTION_ID'
+    ];
+    
+    for (const envVar of requiredEnvVars) {
+      if (!process.env[envVar]) {
+        console.error(`Missing environment variable: ${envVar}`);
+        return res.status(500).json({ error: `Server configuration error: ${envVar} not set` });
+      }
+    }
+
     const client = new Client()
       .setEndpoint(process.env.APPWRITE_ENDPOINT)
       .setProject(process.env.APPWRITE_PROJECT_ID)
       .setKey(process.env.APPWRITE_API_KEY);
 
     const databases = new Databases(client);
-
-    // Get email from request
     const { email } = req.body;
 
-    // Validate email
     if (!email) {
       return res.status(400).json({ error: 'Email is required' });
     }
+    
+    if (!email.includes('@') || !email.includes('.')) {
+      return res.status(400).json({ error: 'Invalid email format' });
+    }
 
-    // Check if email already exists
     const existingSubscriber = await databases.listDocuments(
       process.env.APPWRITE_DATABASE_ID,
       process.env.APPWRITE_SUBSCRIBERS_COLLECTION_ID,
@@ -34,8 +47,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Email already subscribed' });
     }
 
-    // Store in Appwrite database
-    await databases.createDocument(
+    const document = await databases.createDocument(
       process.env.APPWRITE_DATABASE_ID,
       process.env.APPWRITE_SUBSCRIBERS_COLLECTION_ID,
       ID.unique(),
@@ -45,13 +57,22 @@ export default async function handler(req, res) {
       }
     );
 
+    console.log('Subscriber created successfully:', document.$id);
+    
     const submittedAt = new Date().toISOString();
     return res.status(200).json({ 
       success: true,
+      documentId: document.$id,
       submittedAt: submittedAt 
     });
   } catch (error) {
-    console.error('Error subscribing to newsletter:', error);
-    return res.status(500).json({ error: 'Server error' });
+    console.error('Error subscribing to newsletter:', error.message);
+    if (error.code) {
+      console.error('Appwrite error code:', error.code);
+    }
+    return res.status(500).json({ 
+      error: 'Server error',
+      message: error.message 
+    });
   }
 }
