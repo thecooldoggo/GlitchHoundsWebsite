@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
             addRippleEffect(submitButton);
             
             try {
-                const response = await fetch('/pages/api/contact', {
+                const response = await fetch('/pages/api/contact.js', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
             addRippleEffect(submitButton);
             
             try {
-                const response = await fetch('/pages/api/subscribe', {
+                const response = await fetch('/pages/api/subscribe.js', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
