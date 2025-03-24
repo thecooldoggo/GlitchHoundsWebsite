@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
             addRippleEffect(submitButton);
             
             try {
-                const response = await fetch('./pages/api/contact.js', {
+                const response = await fetch('/pages/api/contact.js', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.ok) {
                     contactForm.reset();
                     submitButton.innerHTML = '<i class="fas fa-check mr-2"></i> Message Sent!';
-                    showFluentNotification('Your message has been sent successfully!', 'success');
+                    showFluentNotification(`Your message has been sent successfully at ${new Date(data.submittedAt).toLocaleString()}!`, 'success');
                 } else {
                     showFluentNotification(data.error || 'Failed to send message', 'error');
                     submitButton.innerHTML = originalButtonText;
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
             addRippleEffect(submitButton);
             
             try {
-                const response = await fetch('./pages/api/subscribe.js', {
+                const response = await fetch('/pages/api/subscribe.js', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 if (response.ok) {
                     emailInput.value = '';
-                    showFluentNotification('You have been subscribed successfully!', 'success');
+                    showFluentNotification(`You have been subscribed successfully at ${new Date(data.submittedAt).toLocaleString()}!`, 'success');
                 } else {
                     showFluentNotification(data.error || 'Failed to subscribe', 'error');
                 }

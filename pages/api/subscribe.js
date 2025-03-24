@@ -45,8 +45,11 @@ export default async function handler(req, res) {
       }
     );
 
-    // Return success
-    return res.status(200).json({ success: true });
+    const submittedAt = new Date().toISOString();
+    return res.status(200).json({ 
+      success: true,
+      submittedAt: submittedAt 
+    });
   } catch (error) {
     console.error('Error subscribing to newsletter:', error);
     return res.status(500).json({ error: 'Server error' });
