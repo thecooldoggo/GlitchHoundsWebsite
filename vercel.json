@@ -10,6 +10,7 @@
     { "src": "pages/api/*.js", "use": "@vercel/node" }
   ],
   "routes": [
+    { "src": "/pages/api/(.*)", "dest": "/pages/api/$1" },
     { "src": "/api/(.*)", "dest": "/pages/api/$1" },
     { "src": "/(.*)", "dest": "/$1" }
   ]
