@@ -1,4 +1,5 @@
-import { Client, Databases, ID, Query, Users, Messaging } from "node-appwrite";
+import { Client, Databases, ID, Query, Users } from "node-appwrite";
+const sdk = require('node-appwrite');
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -29,7 +30,7 @@ export default async function handler(req, res) {
 
     const databases = new Databases(client);
     const users = new Users(client);
-    const messaging = new Messaging(client);
+    const messaging = new sdk.Messaging(client);
     const { email } = req.body;
 
     if (!email) {
