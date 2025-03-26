@@ -54,38 +54,45 @@ export default async function handler(req, res) {
     console.log('Document created successfully:', document.$id);
     
     try {
+      const timestamp = Math.floor(Date.now() / 1000);
+      
       const webhookBody = {
         embeds: [{
-          title: "🎮 New Contact Form Submission",
-          color: 9055202,
+          title: "📬 New Contact Form Submission",
+          description: "A new client has reached out through the Glitch Hounds website.",
+          color: 0x8A2BE2,
           fields: [
             {
-              name: "Name",
+              name: "👤 Name",
               value: name,
               inline: true
             },
             {
-              name: "Email",
+              name: "📧 Email",
               value: email,
               inline: true
             },
             {
-              name: "Message",
-              value: message
+              name: "💼 Submitted",
+              value: `<t:${timestamp}:R> (<t:${timestamp}:F>)`,
+              inline: false
             },
             {
-              name: "Timestamp",
-              value: new Date().toISOString(),
-              inline: true
+              name: "💬 Message",
+              value: "```" + message + "```"
             },
             {
-              name: "Document ID",
-              value: document.$id,
+              name: "🔑 Document ID",
+              value: `\`${document.$id}\``,
               inline: true
             }
           ],
+          thumbnail: {
+            url: "https://glitchhounds.games/GHPurple.png"
+          },
           footer: {
-            text: "Glitch Hounds Website"
+            text: "Glitch Hounds | UEFN Fortnite Creative Team",
+            icon_url: "https://glitchhounds.games/GHPurple.png"
           }
         }]
       };
