@@ -1,4 +1,4 @@
-import { Client, Databases, Query } from "node-appwrite";
+import { Client, Users, Query } from "node-appwrite";
 import crypto from 'crypto';
 
 export default async function handler(req, res) {
@@ -27,29 +27,20 @@ export default async function handler(req, res) {
       .setProject(process.env.APPWRITE_PROJECT_ID)
       .setKey(process.env.APPWRITE_API_KEY);
 
-    const databases = new Databases(client);
+    const users = new Users(client);
 
-    const subscribers = await databases.listDocuments(
-      process.env.APPWRITE_DATABASE_ID,
-      process.env.APPWRITE_SUBSCRIBERS_COLLECTION_ID,
-      [Query.equal('email', email.toLowerCase())]
-    );
+    const usersList = await users.list([
+      Query.equal('email', email.toLowerCase())
+    ]);
 
-    if (subscribers.documents.length === 0) {
+    if (usersList.total === 0) {
       return res.status(404).json({ error: 'Subscriber not found' });
     }
 
-    const subscriber = subscribers.documents[0];
+    const user = usersList.users[0];
 
-    await databases.updateDocument(
-      process.env.APPWRITE_DATABASE_ID,
-      process.env.APPWRITE_SUBSCRIBERS_COLLECTION_ID,
-      subscriber.$id,
-      {
-        status: 'unsubscribed',
-        unsubscribedAt: new Date().toISOString()
-      }
-    );
+
+    await users.delete(user.$id);
 
     res.setHeader('Content-Type', 'text/html');
     return res.status(200).send(`<!DOCTYPE html>
