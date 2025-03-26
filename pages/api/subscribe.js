@@ -1,4 +1,4 @@
-import { Client, Databases, ID, Query, Users, Functions } from "node-appwrite";
+import { Client, Databases, ID, Query, Users } from "node-appwrite";
 import crypto from 'crypto';
 
 export default async function handler(req, res) {
@@ -14,8 +14,7 @@ export default async function handler(req, res) {
       'APPWRITE_DATABASE_ID',
       'APPWRITE_SUBSCRIBERS_COLLECTION_ID',
       'UNSUBSCRIBE_SECRET',
-      'WEBSITE_URL',
-      'APPWRITE_WELCOME_EMAIL_FUNCTION_ID'
+      'WEBSITE_URL'
     ];
     
     for (const envVar of requiredEnvVars) {
@@ -52,6 +51,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Email already subscribed' });
     }
 
+    // Save to subscribers collection
     const document = await databases.createDocument(
       process.env.APPWRITE_DATABASE_ID,
       process.env.APPWRITE_SUBSCRIBERS_COLLECTION_ID,
@@ -65,50 +65,25 @@ export default async function handler(req, res) {
 
     console.log('Subscriber created successfully:', document.$id);
     
-    const unsubscribeToken = crypto
-      .createHmac('sha256', process.env.UNSUBSCRIBE_SECRET)
-      .update(email.toLowerCase())
-      .digest('hex');
-
-    const unsubscribeUrl = `${process.env.WEBSITE_URL}/api/unsubscribe?token=${unsubscribeToken}&email=${encodeURIComponent(email.toLowerCase())}`;
-
+    const users = new Users(client);
+    const password = crypto.randomBytes(16).toString('hex');
+    const username = email.split('@')[0] + '-' + crypto.randomBytes(4).toString('hex');
+    
     try {
-      const users = new Users(client);
-      const password = crypto.randomBytes(16).toString('hex');
-      const username = email.split('@')[0] + '-' + crypto.randomBytes(4).toString('hex');
-      
-      try {
-        const user = await users.create(
-          ID.unique(),
-          email.toLowerCase(),
-          password,
-          username
-        );
-        
-        console.log('User created with ID:', user.$id);
-      } catch (userError) {
-        if (userError.code === 409) {
-          console.log('User already exists, continuing with email process');
-        } else {
-          throw userError;
-        }
-      }
-      
-      const functions = new Functions(client);
-      await functions.createExecution(
-        process.env.APPWRITE_WELCOME_EMAIL_FUNCTION_ID,
-        JSON.stringify({
-          email: email.toLowerCase(),
-          name: email.split('@')[0],
-          unsubscribeUrl,
-          documentId: document.$id
-        }),
-        false
+      const user = await users.create(
+        ID.unique(),
+        email.toLowerCase(),
+        password,
+        username
       );
       
-      console.log('Welcome email function triggered for:', email);
-    } catch (emailError) {
-      console.error('Error in user creation or email process:', emailError);
+      console.log('User created with ID:', user.$id, '- welcome email will be triggered automatically');
+    } catch (userError) {
+      if (userError.code === 409) {
+        console.log('User already exists, welcome email will not be sent');
+      } else {
+        throw userError;
+      }
     }
     
     return res.status(200).json({ 
