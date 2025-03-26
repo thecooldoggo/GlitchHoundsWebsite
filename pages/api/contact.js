@@ -11,7 +11,8 @@ export default async function handler(req, res) {
       'APPWRITE_PROJECT_ID',
       'APPWRITE_API_KEY',
       'APPWRITE_DATABASE_ID',
-      'APPWRITE_SUBMISSIONS_COLLECTION_ID'
+      'APPWRITE_SUBMISSIONS_COLLECTION_ID',
+      'DISCORD_WEBHOOK_URL'
     ];
     
     for (const envVar of requiredEnvVars) {
@@ -51,6 +52,56 @@ export default async function handler(req, res) {
     );
 
     console.log('Document created successfully:', document.$id);
+    
+    try {
+      const webhookBody = {
+        embeds: [{
+          title: "🎮 New Contact Form Submission",
+          color: 9055202,
+          fields: [
+            {
+              name: "Name",
+              value: name,
+              inline: true
+            },
+            {
+              name: "Email",
+              value: email,
+              inline: true
+            },
+            {
+              name: "Message",
+              value: message
+            },
+            {
+              name: "Timestamp",
+              value: new Date().toISOString(),
+              inline: true
+            },
+            {
+              name: "Document ID",
+              value: document.$id,
+              inline: true
+            }
+          ],
+          footer: {
+            text: "Glitch Hounds Website"
+          }
+        }]
+      };
+      
+      await fetch(process.env.DISCORD_WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(webhookBody),
+      });
+      
+      console.log('Discord webhook notification sent');
+    } catch (webhookError) {
+      console.error('Error sending Discord webhook:', webhookError);
+    }
     
     return res.status(200).json({ 
       success: true,
