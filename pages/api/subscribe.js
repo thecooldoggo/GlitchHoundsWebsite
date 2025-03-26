@@ -51,7 +51,6 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Email already subscribed' });
     }
 
-    // Save to subscribers collection
     const document = await databases.createDocument(
       process.env.APPWRITE_DATABASE_ID,
       process.env.APPWRITE_SUBSCRIBERS_COLLECTION_ID,
@@ -64,25 +63,33 @@ export default async function handler(req, res) {
     );
 
     console.log('Subscriber created successfully:', document.$id);
+
+    const unsubscribeToken = crypto
+      .createHmac('sha256', process.env.UNSUBSCRIBE_SECRET)
+      .update(email.toLowerCase())
+      .digest('hex');
     
-    const users = new Users(client);
-    const password = crypto.randomBytes(16).toString('hex');
-    const username = email.split('@')[0] + '-' + crypto.randomBytes(4).toString('hex');
+    const unsubscribeUrl = `${process.env.WEBSITE_URL}/api/unsubscribe?token=${unsubscribeToken}&email=${encodeURIComponent(email)}`;
     
     try {
+      const users = new Users(client);
+      const password = crypto.randomBytes(16).toString('hex');
+      
       const user = await users.create(
         ID.unique(),
         email.toLowerCase(),
         password,
-        username
+        email.split('@')[0]
       );
       
-      console.log('User created with ID:', user.$id, '- welcome email will be triggered automatically');
+      console.log('User created with ID:', user.$id);      
+      console.log('Welcome email would be sent to:', email);
+      
     } catch (userError) {
       if (userError.code === 409) {
-        console.log('User already exists, welcome email will not be sent');
+        console.log('User already exists:', email);
       } else {
-        throw userError;
+        console.error('Error creating user:', userError.message, userError.code);
       }
     }
     
@@ -90,7 +97,7 @@ export default async function handler(req, res) {
       success: true,
       documentId: document.$id,
       submittedAt: document.subscribedAt,
-      emailSent: true
+      emailSent: true,
     });
   } catch (error) {
     console.error('Error subscribing to newsletter:', error.message);
