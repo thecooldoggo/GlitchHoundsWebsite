@@ -229,62 +229,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    createBackToTopButton();
-    createScrollRevealEffects();
-    
-    const newsletterForm = document.querySelector('footer form');
-    
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const emailInput = newsletterForm.querySelector('input[type="email"]');
-            const email = emailInput.value;
-            
-            if (!email) {
-                showFluentNotification('Please enter your email address', 'error');
-                return;
-            }
-            
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                showFluentNotification('Please enter a valid email address', 'error');
-                return;
-            }
-            
-            const submitButton = newsletterForm.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.innerHTML;
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            submitButton.disabled = true;
-            
-            addRippleEffect(submitButton);
-            
-            try {
-                const response = await fetch('/pages/api/subscribe.js', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email }),
-                });
-
-                const data = await response.json();
-                
-                if (response.ok) {
-                    emailInput.value = '';
-                    showFluentNotification('You have been subscribed successfully!', 'success');
-                } else {
-                    showFluentNotification(data.error || 'Failed to subscribe', 'error');
-                }
-            } catch (error) {
-                showFluentNotification('Failed to connect to server', 'error');
-            }
-            
-            submitButton.innerHTML = originalButtonText;
-            submitButton.disabled = false;
-        });
-    }
-});
+createBackToTopButton();
+createScrollRevealEffects();
 
 function easeInOutCubic(t) {
     return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -615,4 +561,5 @@ document.addEventListener('DOMContentLoaded', function() {
             document.head.appendChild(style);
         }
     }
-});
+    });
+})
