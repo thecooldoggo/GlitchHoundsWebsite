@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - Cirillion Shop</title>
+    <link rel="icon" type="image/png" href="GHPurple.png">
+
+    <!-- SEO and Social Sharing Meta Tags -->
+    <meta name="description" content="Login with Discord to access the Cirillion Shop.">
+    <meta name="theme-color" content="#8A2BE2">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Login - Cirillion Shop">
+    <meta property="og:description" content="Login with Discord to access the Cirillion Shop.">
+    <meta property="og:image" content="https://thecooldoggo.github.io/images/token.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Login - Cirillion Shop">
+    <meta property="twitter:description" content="Login with Discord to access the Cirillion Shop.">
+    <meta property="twitter:image" content="https://thecooldoggo.github.io/images/token.png">
+    
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@17.0.0"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --theme-color-start: #7c4dff;
+            --theme-color-mid: #8A2BE2;
+            --theme-color-end: #B76EFF;
+            --theme-shadow: rgba(138, 43, 226, 0.4);
+        }
+        body {
+            background-color: #2a2a2e;
+            background-image: radial-gradient(ellipse at top, var(--theme-color-start), #2a2a2e 75%);
+            background-repeat: no-repeat;
+            overflow: hidden;
+        }
+        .liquid-glass-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); /* For Safari */
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: all 0.3s ease-in-out;
+        }
+        .liquid-glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 40px -10px var(--theme-shadow);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+        .theme-shadow {
+            box-shadow: 0 10px 25px -5px var(--theme-shadow), 0 8px 10px -6px var(--theme-shadow);
+        }
+    </style>
+</head>
+<body class="text-white font-sans">
+
+    <div class="absolute inset-0 bg-black/60 -z-10"></div>
+
+    <div class="relative z-10 h-screen flex items-center justify-center p-4">
+        <div class="liquid-glass-card w-full max-w-lg p-10 md:p-12 rounded-2xl">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[var(--theme-color-end)] to-[var(--theme-color-mid)] text-transparent bg-clip-text">Welcome</h1>
+                <p class="text-gray-300 mb-10 text-lg">Login with Discord to access the Shop.</p>
+                <button id="discord-login" class="theme-shadow bg-gradient-to-r from-[var(--theme-color-mid)] to-[var(--theme-color-end)] hover:opacity-90 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center w-full text-lg">
+                    <img src="DiscordLogo.svg" alt="Discord Logo" class="w-7 h-7 mr-3">
+                    <span>Login with Discord</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { Client, Account, OAuthProvider } = Appwrite;
+
+        const client = new Client();
+        client
+            .setEndpoint('https://nyc.cloud.appwrite.io/v1')
+            .setProject('684439b6001f3f53a474');
+
+        const account = new Account(client);
+
+        const discordLoginButton = document.getElementById('discord-login');
+
+        const themes = {
+            purple: { start: '#7c4dff', mid: '#8A2BE2', end: '#B76EFF', shadow: 'rgba(138, 43, 226, 0.4)' },
+            red: { start: '#ff4d4d', mid: '#e60000', end: '#ff3333', shadow: 'rgba(226, 43, 43, 0.4)' },
+            orange: { start: '#ffac4d', mid: '#ff8c00', end: '#ffa500', shadow: 'rgba(226, 134, 43, 0.4)' },
+            yellow: { start: '#ffeb3b', mid: '#fbc02d', end: '#ffee58', shadow: 'rgba(226, 204, 43, 0.4)' },
+            green: { start: '#4dff88', mid: '#00b33c', end: '#33ff77', shadow: 'rgba(43, 226, 83, 0.4)' },
+            blue: { start: '#4d7eff', mid: '#004de6', end: '#3366ff', shadow: 'rgba(43, 95, 226, 0.4)' },
+        };
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function applyTheme(themeName) {
+            const theme = themes[themeName] || themes.purple;
+            const root = document.documentElement;
+            root.style.setProperty('--theme-color-start', theme.start);
+            root.style.setProperty('--theme-color-mid', theme.mid);
+            root.style.setProperty('--theme-color-end', theme.end);
+            root.style.setProperty('--theme-shadow', theme.shadow);
+        }
+
+        // Apply theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = getCookie('shopTheme');
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            }
+        });
+
+        discordLoginButton.addEventListener('click', () => {
+            const successUrl = new URL('shop/', window.location.href).href;
+            const failureUrl = new URL('index.html', window.location.href).href; // Redirect back to login on failure
+            account.createOAuth2Session(
+                OAuthProvider.Discord, // Provider
+                successUrl, // Success URL
+                failureUrl,  // Failure URL
+                ['identify'] // Scopes
+            );
+        });
+    </script>
+
+</body>
+</html>
