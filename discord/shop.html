@@ -396,7 +396,7 @@
         async function logout() {
             try {
                 await account.deleteSession('current');
-                window.location.href = '../';
+                window.location.href = '/discord';
             } catch (error) {
                 console.error("Failed to logout:", error);
                 showToast("Failed to logout. Please try again.", true);
