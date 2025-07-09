@@ -120,8 +120,8 @@
         });
 
         discordLoginButton.addEventListener('click', () => {
-            const successUrl = new URL('shop/', window.location.href).href;
-            const failureUrl = new URL('index.html', window.location.href).href; // Redirect back to login on failure
+            const successUrl = new URL('discord/shop.html', window.location.href).href;
+            const failureUrl = new URL('discord/index.html', window.location.href).href; // Redirect back to login on failure
             account.createOAuth2Session(
                 OAuthProvider.Discord, // Provider
                 successUrl, // Success URL
