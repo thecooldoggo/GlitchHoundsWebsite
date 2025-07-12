@@ -348,7 +348,7 @@
             }
         }
 
-        async function getSessionWithRetry(retries = 2, delay = 1000) {
+        async function getSessionWithRetry(retries = 2, delay = 9000) {
             try {
                 return await account.get();
             } catch (error) {
