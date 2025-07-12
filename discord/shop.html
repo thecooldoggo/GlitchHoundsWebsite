@@ -348,15 +348,29 @@
             }
         }
 
+        async function getSessionWithRetry(retries = 2, delay = 1000) {
+            try {
+                return await account.get();
+            } catch (error) {
+                if (retries > 0) {
+                    console.log(`Session check failed. Retrying in ${delay}ms...`);
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return getSessionWithRetry(retries - 1, delay);
+                } else {
+                    throw error;
+                }
+            }
+        }
+
         async function initializeShop() {
             try {
                 const urlParams = new URLSearchParams(window.location.search);
-                const hasAuthParams = urlParams.has('userId') && urlParams.has('secret');
-                const hasError = urlParams.has('error');
+                const secret = urlParams.get('secret');
+                const userId = urlParams.get('userId');
 
-                if (hasError) {
-                    const errorMessage = JSON.parse(decodeURIComponent(urlParams.get('error'))).message;
-                    throw new Error(`Login failed: ${errorMessage}`);
+                if (secret && userId) {
+                    await account.createSession(userId, secret);
+                    window.history.replaceState({}, document.title, window.location.pathname);
                 }
 
                 const savedTheme = getCookie('shopTheme');
@@ -365,11 +379,7 @@
                 } else {
                     applyTheme('purple');
                 }
-                const user = await account.get();
-
-                if (hasAuthParams) {
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                }
+                await getSessionWithRetry();
 
                 const result = await functions.createExecution(GET_SHOP_DATA_FUNCTION_ID);
                 const response = JSON.parse(result.responseBody);
@@ -395,14 +405,14 @@
 
             } catch (error) {
                 console.error("Failed to initialize shop:", error);
-                window.location.href = '../index.html';
+                window.location.href = 'index.html';
             }
         }
 
         async function logout() {
             try {
                 await account.deleteSession('current');
-                window.location.href = './discord';
+                window.location.href = 'index.html';
             } catch (error) {
                 console.error("Failed to logout:", error);
                 showToast("Failed to logout. Please try again.", true);
