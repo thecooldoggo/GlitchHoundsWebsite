@@ -72,7 +72,7 @@
 
     <script>
         const { Client, Account, OAuthProvider } = Appwrite;
-
+        
         const client = new Client();
         client
             .setEndpoint('https://nyc.cloud.appwrite.io/v1')
@@ -120,13 +120,11 @@
         });
 
         discordLoginButton.addEventListener('click', () => {
-            const successUrl = new URL('discord/shop.html', window.location.href).href;
-            const failureUrl = new URL('discord/index.html', window.location.href).href; // Redirect back to login on failure
             account.createOAuth2Session(
-                OAuthProvider.Discord, // Provider
-                successUrl, // Success URL
-                failureUrl,  // Failure URL
-                ['identify'] // Scopes
+                OAuthProvider.Discord,
+                'http://www.glitchhounds.games/discord/shop.html', // Success URL
+                'http://www.glitchhounds.games/discord/index.html', // Failure URL
+                ['identify', 'email'] // Scopes
             );
         });
     </script>
