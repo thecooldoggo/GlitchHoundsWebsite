@@ -357,12 +357,10 @@
                     applyTheme('purple');
                 }
 
-                if (window.location.hash.includes('secret')) {
-                    await account.createSessionFromURL();
-                    window.location.assign(window.location.pathname);
-                    return;
-                }
+                // This will create a session if the user is returning from OAuth
+                await account.createSessionFromURL();
 
+                // Now we can safely get the account
                 await account.get();
 
                 const result = await functions.createExecution(GET_SHOP_DATA_FUNCTION_ID);
