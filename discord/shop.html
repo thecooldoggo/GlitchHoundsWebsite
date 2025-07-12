@@ -351,9 +351,7 @@
         async function initializeShop() {
             try {
                 const urlParams = new URLSearchParams(window.location.search);
-                if (urlParams.has('userId') && urlParams.has('secret')) {
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                }
+                const hasAuthParams = urlParams.has('userId') && urlParams.has('secret');
 
                 const savedTheme = getCookie('shopTheme');
                 if (savedTheme) {
@@ -362,6 +360,10 @@
                     applyTheme('purple');
                 }
                 const user = await account.get();
+
+                if (hasAuthParams) {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
 
                 const result = await functions.createExecution(GET_SHOP_DATA_FUNCTION_ID);
                 const response = JSON.parse(result.responseBody);
