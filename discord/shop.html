@@ -350,6 +350,11 @@
 
         async function initializeShop() {
             try {
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.has('userId') && urlParams.has('secret')) {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+
                 const savedTheme = getCookie('shopTheme');
                 if (savedTheme) {
                     applyTheme(savedTheme);
