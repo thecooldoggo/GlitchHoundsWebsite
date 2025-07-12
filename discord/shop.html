@@ -352,6 +352,12 @@
             try {
                 const urlParams = new URLSearchParams(window.location.search);
                 const hasAuthParams = urlParams.has('userId') && urlParams.has('secret');
+                const hasError = urlParams.has('error');
+
+                if (hasError) {
+                    const errorMessage = JSON.parse(decodeURIComponent(urlParams.get('error'))).message;
+                    throw new Error(`Login failed: ${errorMessage}`);
+                }
 
                 const savedTheme = getCookie('shopTheme');
                 if (savedTheme) {
@@ -389,7 +395,16 @@
 
             } catch (error) {
                 console.error("Failed to initialize shop:", error);
-                window.location.href = '/discord';
+                // To prevent a redirect loop, we check if we just came from a failed login.
+                const urlParams = new URLSearchParams(window.location.search);
+                if (!urlParams.has('userId') && !urlParams.has('secret')) {
+                    window.location.href = '/discord/'; // Use absolute path to prevent /discord/discord
+                } else {
+                    // If we are here, it means account.get() failed even with auth params.
+                    // Displaying the error on the loader is better than a redirect loop.
+                    document.querySelector('#loader h1').textContent = 'Authentication Failed';
+                    document.querySelector('#loader p').textContent = error.message;
+                }
             }
         }
 
