@@ -58,12 +58,13 @@
                     </a>
                 </div>
                 
-                <div class="hidden md:flex space-x-8">
+                <div class="hidden md:flex items-center space-x-8">
                     <a href="#" class="text-white hover:text-gh-light-purple transition">Home</a>
                     <a href="#about" class="text-white hover:text-gh-light-purple transition">About</a>
                     <a href="#services" class="text-white hover:text-gh-light-purple transition">Services</a>
                     <a href="#portfolio" class="text-white hover:text-gh-light-purple transition">Portfolio</a>
                     <a href="#contact" class="text-white hover:text-gh-light-purple transition">Contact</a>
+                    <a href="discord/index.html" class="px-4 py-2 bg-white/10 backdrop-blur-md rounded-md font-medium hover:bg-white/20 transition border border-white/10">Login</a>
                 </div>
                 
                 <div class="md:hidden">
@@ -74,12 +75,23 @@
                 </div>
             </div>
             
-            <div x-show="mobileMenuOpen" class="md:hidden mt-3 space-y-3 pb-3" x-transition>
-                <a href="#" class="block text-white hover:text-gh-light-purple transition">Home</a>
-                <a href="#about" class="block text-white hover:text-gh-light-purple transition">About</a>
-                <a href="#services" class="block text-white hover:text-gh-light-purple transition">Services</a>
-                <a href="#portfolio" class="block text-white hover:text-gh-light-purple transition">Portfolio</a>
-                <a href="#contact" class="block text-white hover:text-gh-light-purple transition">Contact</a>
+            <div x-show="mobileMenuOpen" 
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 transform -translate-y-4"
+                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 transform translate-y-0"
+                 x-transition:leave-end="opacity-0 transform -translate-y-4"
+                 @click.away="mobileMenuOpen = false"
+                 class="md:hidden mt-4 p-4 bg-gh-dark/90 backdrop-blur-lg rounded-lg border border-purple-900/30 absolute top-full left-0 right-0 mx-4">
+                <div class="flex flex-col space-y-4 text-center">
+                    <a href="#" @click="mobileMenuOpen = false" class="block text-white hover:text-gh-light-purple transition py-2">Home</a>
+                    <a href="#about" @click="mobileMenuOpen = false" class="block text-white hover:text-gh-light-purple transition py-2">About</a>
+                    <a href="#services" @click="mobileMenuOpen = false" class="block text-white hover:text-gh-light-purple transition py-2">Services</a>
+                    <a href="#portfolio" @click="mobileMenuOpen = false" class="block text-white hover:text-gh-light-purple transition py-2">Portfolio</a>
+                    <a href="#contact" @click="mobileMenuOpen = false" class="block text-white hover:text-gh-light-purple transition py-2">Contact</a>
+                    <a href="discord/index.html" class="mt-2 block px-6 py-3 bg-gradient-to-r from-gh-purple to-gh-light-purple rounded-md font-medium hover:opacity-90 transition shadow-lg shadow-purple-500/20">Login</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -87,13 +99,13 @@
     <section class="py-20 acrylic-panel relative">
         <div class="container mx-auto px-4 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div data-aos="fade-right" data-aos-duration="1000">
+                <div data-aos="fade-right" data-aos-duration="1000" class="text-center md:text-left">
                     <h1 class="text-4xl md:text-6xl font-bold mb-4">
                         <span class="bg-gradient-to-r from-gh-purple to-gh-light-purple text-transparent bg-clip-text">Bringing Your Fortnite</span>
                         <span class="block">Creative Vision to Life</span>
                     </h1>
                     <p class="text-gray-300 text-lg mb-8">Custom UEFN map creation service by the Glitch Hounds team - turning your game ideas into playable realities.</p>
-                    <div class="flex flex-wrap gap-4">
+                    <div class="flex flex-wrap gap-4 justify-center md:justify-start">
                         <a href="#services" class="px-6 py-3 bg-gradient-to-r from-gh-purple to-gh-light-purple rounded-md font-medium hover:opacity-90 transition shadow-lg shadow-purple-500/20">Our Services</a>
                         <a href="#portfolio" class="px-6 py-3 bg-white/10 backdrop-blur-md rounded-md font-medium hover:bg-white/20 transition border border-white/10">View Portfolio</a>
                     </div>
