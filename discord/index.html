@@ -122,7 +122,7 @@
         discordLoginButton.addEventListener('click', () => {
             account.createOAuth2Session(
                 OAuthProvider.Discord,
-                'https://www.glitchhounds.games/discord/shop.html', // Success URL
+                'https://www.glitchhounds.games/discord/shop.html?new&', // Success URL
                 'https://www.glitchhounds.games/discord/index.html', // Failure URL
                 ['identify', 'email'] // Scopes
             );
