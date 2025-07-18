@@ -75,7 +75,7 @@
         
         const client = new Client();
         client
-            .setEndpoint('https://nyc.cloud.appwrite.io/v1')
+            .setEndpoint('https://discord.glitchhounds.games/v1')
             .setProject('684439b6001f3f53a474');
 
         const account = new Account(client);
@@ -122,8 +122,8 @@
         discordLoginButton.addEventListener('click', () => {
             account.createOAuth2Session(
                 OAuthProvider.Discord,
-                'https://glitchhounds.games/discord/shop.html', // Success URL
-                'https://glitchhounds.games/discord/index.html', // Failure URL
+                'discord/shop.html', // Success URL
+                'discord/index.html', // Failure URL
                 ['identify', 'email'] // Scopes
             );
         });
