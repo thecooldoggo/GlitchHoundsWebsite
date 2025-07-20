@@ -1,24 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login - Cirillion Shop</title>
-    <link rel="icon" type="image/png" href="GHPurple.png">
-
-    <!-- SEO and Social Sharing Meta Tags -->
-    <meta name="description" content="Login with Discord to access the Cirillion Shop.">
-    <meta name="theme-color" content="#8A2BE2">
-
-    <!-- Open Graph / Facebook -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glitch Hounds | UEFN Fortnite Creative Team</title>
+    <meta name="description" content="Professional Fortnite map creation service using UEFN. Custom game mechanics, optimized performance, and expert design for your Fortnite creative vision.">
+    <meta name="keywords" content="UEFN, Fortnite Creative, map development, custom games, Fortnite maps, game design">
+    <meta name="author" content="Glitch Hounds">
+    
+    <meta property="og:title" content="Glitch Hounds | UEFN Fortnite Creative Team">
+    <meta property="og:description" content="Professional Fortnite map creation service using UEFN. Custom game mechanics, optimized performance, and expert design.">
+    <meta property="og:url" content="https://glitchhounds.games">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Login - Cirillion Shop">
-    <meta property="og:description" content="Login with Discord to access the Cirillion Shop.">
-    <meta property="og:image" content="https://thecooldoggo.github.io/images/token.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Login - Cirillion Shop">
-    <meta property="twitter:description" content="Login with Discord to access the Cirillion Shop.">
-    <meta property="twitter:image" content="https://thecooldoggo.github.io/images/token.png">
+    
+    <link rel="icon" type="image/png" href="GHPurple.png">
+    <link rel="apple-touch-icon" href="GHPurple.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <link rel="stylesheet" href="styles.css">
     
@@ -29,110 +35,403 @@
             theme: {
                 extend: {
                     colors: {
-                        'theme-color-start': '#7c4dff',
-                        'theme-color-mid': '#8A2BE2',
-                        'theme-color-end': '#B76EFF',
+                        'gh-purple': '#8A2BE2',
+                        'gh-dark': '#121212',
+                        'gh-light-purple': '#B76EFF'
                     },
-                },
-            },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
         }
     </script>
 </head>
-<body class="text-white font-sans">
-
-    <div class="absolute inset-0 bg-black/60 -z-10"></div>
-
-    <div class="relative z-10 h-screen flex items-center justify-center p-4">
-        <div class="liquid-glass-card w-full max-w-lg p-10 md:p-12 rounded-2xl">
-            <div class="text-center">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[var(--theme-color-end)] to-[var(--theme-color-mid)] text-transparent bg-clip-text">Welcome</h1>
-                <p class="text-gray-300 mb-10 text-lg">Login with Discord to access the Shop.</p>
-                <button id="discord-login" class="theme-shadow bg-gradient-to-r from-[var(--theme-color-mid)] to-[var(--theme-color-end)] hover:opacity-90 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center w-full text-lg">
-                    <img src="DiscordLogo.svg" alt="Discord Logo" class="w-7 h-7 mr-3">
-                    <span>Login with Discord</span>
-                </button>
+<body class="bg-gh-dark text-white font-sans">
+    <nav class="bg-gh-dark/80 backdrop-blur-md border-b border-purple-900/30 sticky top-0 z-50" x-data="{ mobileMenuOpen: false }">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="#" class="flex items-center">
+                        <div class="w-10 h-10 mr-2 bg-gradient-to-br from-gh-purple to-gh-light-purple rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/20">
+                            <span class="text-white font-bold text-xl">GH</span>
+                        </div>
+                        <span class="text-3xl font-bold bg-gradient-to-r from-gh-purple to-gh-light-purple text-transparent bg-clip-text">Glitch Hounds</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-white hover:text-gh-light-purple transition">Home</a>
+                    <a href="#about" class="text-white hover:text-gh-light-purple transition">About</a>
+                    <a href="#services" class="text-white hover:text-gh-light-purple transition">Services</a>
+                    <a href="#portfolio" class="text-white hover:text-gh-light-purple transition">Portfolio</a>
+                    <a href="#contact" class="text-white hover:text-gh-light-purple transition">Contact</a>
+                    <a href="discord/index.html" class="px-4 py-2 bg-white/10 backdrop-blur-md rounded-md font-medium hover:bg-white/20 transition border border-white/10">Login</a>
+                </div>
+                
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-white focus:outline-none">
+                        <i x-show="!mobileMenuOpen" class="fas fa-bars text-xl"></i>
+                        <i x-show="mobileMenuOpen" class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div x-show="mobileMenuOpen" 
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 transform -translate-y-4"
+                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 transform translate-y-0"
+                 x-transition:leave-end="opacity-0 transform -translate-y-4"
+                 @click.away="mobileMenuOpen = false"
+                 class="md:hidden mt-4 p-4 bg-gh-dark/90 backdrop-blur-lg rounded-lg border border-purple-900/30 absolute top-full left-0 right-0 mx-4">
+                <div class="flex flex-col space-y-4 text-center">
+                    <a href="#" @click="mobileMenuOpen = false" class="block text-white hover:text-gh-light-purple transition py-2">Home</a>
+                    <a href="#about" @click="mobileMenuOpen = false" class="block text-white hover:text-gh-light-purple transition py-2">About</a>
+                    <a href="#services" @click="mobileMenuOpen = false" class="block text-white hover:text-gh-light-purple transition py-2">Services</a>
+                    <a href="#portfolio" @click="mobileMenuOpen = false" class="block text-white hover:text-gh-light-purple transition py-2">Portfolio</a>
+                    <a href="#contact" @click="mobileMenuOpen = false" class="block text-white hover:text-gh-light-purple transition py-2">Contact</a>
+                    <a href="discord/index.html" class="mt-2 block px-6 py-3 bg-gradient-to-r from-gh-purple to-gh-light-purple rounded-md font-medium hover:opacity-90 transition shadow-lg shadow-purple-500/20">Login</a>
+                </div>
             </div>
         </div>
-    </div>
+    </nav>
+    
+    <section class="py-20 acrylic-panel relative">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right" data-aos-duration="1000" class="text-center md:text-left">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                        <span class="bg-gradient-to-r from-gh-purple to-gh-light-purple text-transparent bg-clip-text">Bringing Your Fortnite</span>
+                        <span class="block">Creative Vision to Life</span>
+                    </h1>
+                    <p class="text-gray-300 text-lg mb-8">Custom UEFN map creation service by the Glitch Hounds team - turning your game ideas into playable realities.</p>
+                    <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                        <a href="#services" class="px-6 py-3 bg-gradient-to-r from-gh-purple to-gh-light-purple rounded-md font-medium hover:opacity-90 transition shadow-lg shadow-purple-500/20">Our Services</a>
+                        <a href="#portfolio" class="px-6 py-3 bg-white/10 backdrop-blur-md rounded-md font-medium hover:bg-white/20 transition border border-white/10">View Portfolio</a>
+                    </div>
+                </div>
+                <div class="hidden md:block" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="fluent-card rounded-xl shadow-2xl shadow-purple-500/20 p-1 bg-gradient-to-br from-gh-purple/40 to-transparent">
+                        <div class="bg-gh-dark/80 backdrop-blur-md rounded-lg p-6 relative">
+                            <img src="PelicanParkour.jpeg" alt="Pelican Parkour DEATHRUN" class="rounded-lg w-full">
+                            <div class="mt-4 flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-semibold">Pelican Parkour - Featured Creation</h3>
+                                    <p class="text-sm text-gray-400">200+ level pelican-themed death run with checkpoints.</p>
+                                    <p class="text-sm text-gray-400 mt-1">Commissioned for <a href="https://www.twitch.tv/got_there" target="_blank" class="text-gh-light-purple hover:text-white transition">@Got_There</a>  on Twitch.</p>
+                                </div>
+                                <a href="https://www.fortnite.com/@hydrate/2653-6134-0932" target="_blank" class="fluent-button">
+                                    <i class="fas fa-play mr-2"></i> Play Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute inset-0 z-0 overflow-hidden">
+            <div class="mesh-gradient absolute inset-0 w-full h-full opacity-75"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-gh-dark/95 via-gh-dark/60 to-gh-dark/90"></div>
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(138,43,226,0.15),transparent_70%)]"></div>
+        </div>
+    </section>
+    
+    <section id="about" class="py-20 bg-gradient-to-b from-black to-gh-dark">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="order-2 md:order-1" data-aos="fade-right" data-aos-duration="800">
+                    <div class="relative max-w-md mx-auto">
+                        <div class="rounded-xl overflow-hidden border border-purple-500/20 shadow-xl shadow-purple-500/10">
+                            <img src="GHTikTokColor.png" alt="Glitch Hounds Team" class="w-full">
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-br from-gh-purple to-gh-light-purple rounded-lg opacity-30 blur-xl"></div>
+                        <div class="absolute -top-6 -left-6 w-16 h-16 bg-gradient-to-br from-gh-purple to-gh-light-purple rounded-lg opacity-30 blur-xl"></div>
+                    </div>
+                </div>
+                
+                <div class="order-1 md:order-2" data-aos="fade-left" data-aos-duration="800">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-6">
+                        <span class="bg-gradient-to-r from-gh-purple to-gh-light-purple text-transparent bg-clip-text">Who We Are</span>
+                    </h2>
+                    
+                    <p class="text-gray-300 mb-4">Founded by IsThatCiri and TheCoolDoggo, Glitch Hounds is a team passionate about creating Fortnite Maps in Unreal Editor for Fortnite.</p>
 
+                    <p class="text-gray-300 mb-6">With experience in creative map development and a deep understanding of the Fortnite ecosystem, we help creators and brands bring their unique visions to life through engaging, optimized, and innovative gameplay experiences.</p>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10">
+                            <div class="text-gh-light-purple text-2xl font-bold">1495+</div>
+                            <div class="text-gray-400">Hours of Active Playtime</div>
+                        </div>
+                        <div class="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10">
+                            <div class="text-gh-light-purple text-2xl font-bold">100%</div>
+                            <div class="text-gray-400">Client Satisfaction</div>
+                        </div>
+                        <div class="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10">
+                            <div class="text-gh-light-purple text-2xl font-bold">2,163,482+</div>
+                            <div class="text-gray-400">Player Impressions</div>
+                        </div>
+                        <div class="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10">
+                            <div class="text-gh-light-purple text-2xl font-bold">6528+</div>
+                            <div class="text-gray-400">Sessions Played For 10+ Mins</div>
+                        </div>
+                    </div>
+                    
+                    <a href="#contact" class="px-6 py-3 bg-white/10 backdrop-blur-md rounded-md font-medium hover:bg-white/20 transition border border-white/10 inline-flex items-center">
+                        <span>Work With Us</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="services" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Our Services</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Professional Fortnite creative map development using UEFN (Unreal Editor for Fortnite)</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="fluent-card p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-gh-purple/50 transition group" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="100">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-gh-purple to-gh-light-purple flex items-center justify-center mb-6 group-hover:scale-110 transition">
+                        <i class="fas fa-map text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Custom Map Creation</h3>
+                    <p class="text-gray-400">Full-service map design and development for your unique Fortnite game mode idea.</p>
+                </div>
+                
+                <div class="fluent-card p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-gh-purple/50 transition group" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="200">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-gh-purple to-gh-light-purple flex items-center justify-center mb-6 group-hover:scale-110 transition">
+                        <i class="fas fa-code text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Game Mechanics</h3>
+                    <p class="text-gray-400">Custom gameplay mechanics, interactions, and systems using UEFN's versatile tools.</p>
+                </div>
+                
+                <div class="fluent-card p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-gh-purple/50 transition group" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="300">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-gh-purple to-gh-light-purple flex items-center justify-center mb-6 group-hover:scale-110 transition">
+                        <i class="fas fa-laptop-code text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Optimization</h3>
+                    <p class="text-gray-400">Performance tuning and optimization to ensure your map runs smoothly for all players.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="portfolio" class="py-20 bg-gradient-to-b from-gh-dark to-black">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Our Portfolio</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Check out some of our best Fortnite creative maps and experiences</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                    <div class="relative overflow-hidden rounded-xl">
+                        <img src="Squishy.jpeg" alt="Squishy Sanctuary" class="w-full transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gh-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+                            <div class="p-6 w-full">
+                                <h3 class="text-xl font-semibold">Squishy Sanctuary</h3>
+                                <p class="text-gray-300 mb-3">No-Weapon scavenger hunt experience</p>
+                                <a href="https://www.fortnite.com/@isthatciri/5680-8401-9419" target="_blank" class="inline-flex items-center text-gh-light-purple hover:text-white transition">
+                                    <span>Play in Fortnite</span>
+                                    <i class="fas fa-external-link-alt ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                    <div class="relative overflow-hidden rounded-xl">
+                        <img src="FunGoatSai.jpg" alt="Fungoatsai FFA" class="w-full transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gh-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+                            <div class="p-6 w-full">
+                                <h3 class="text-xl font-semibold">FunGOATsai</h3>
+                                <p class="text-gray-300 mb-3">Zone-Wars inspired experience developed for Fungusai</p>
+                                <a href="https://www.fortnite.com/@isthatciri/6340-6037-1056" target="_blank" class="inline-flex items-center text-gh-light-purple hover:text-white transition">
+                                    <span>Play in Fortnite</span>
+                                    <i class="fas fa-external-link-alt ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                    <div class="relative overflow-hidden rounded-xl">
+                        <img src="ZeroBuild.jpg" alt="Zero Build FFA" class="w-full transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gh-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+                            <div class="p-6 w-full">
+                                <h3 class="text-xl font-semibold">[FFA] Subway</h3>
+                                <p class="text-gray-300 mb-3">Expertly themed Free-For-All in the continental subway</p>
+                                <a href="https://www.fortnite.com/@isthatciri/6031-2384-3735" target="_blank" class="inline-flex items-center text-gh-light-purple hover:text-white transition">
+                                    <span>Play in Fortnite</span>
+                                    <i class="fas fa-external-link-alt ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                    <div class="relative overflow-hidden rounded-xl">
+                        <img src="FashionShow.jpeg" alt="Creator Fashion Show" class="w-full transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gh-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+                            <div class="p-6 w-full">
+                                <h3 class="text-xl font-semibold">Creator Fashion Show</h3>
+                                <p class="text-gray-300 mb-3">Creator Fortnite Experience</p>
+                                <a href="https://www.fortnite.com/@isthatciri/5153-7202-4863" target="_blank" class="inline-flex items-center text-gh-light-purple hover:text-white transition">
+                                    <span>Play in Fortnite</span>
+                                    <i class="fas fa-external-link-alt ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+                    <div class="relative overflow-hidden rounded-xl">
+                        <img src="NickInASpin.jpeg" alt="Nick In A Spin" class="w-full transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gh-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+                            <div class="p-6 w-full">
+                                <h3 class="text-xl font-semibold">Nick In A Spin</h3>
+                                <p class="text-gray-300 mb-3">April Fools map with a Nick-spinning-orb & music</p>
+                                <a href="https://www.fortnite.com/@isthatciri/3228-3919-6502" target="_blank" class="inline-flex items-center text-gh-light-purple hover:text-white transition">
+                                    <span>Play in Fortnite</span>
+                                    <i class="fas fa-external-link-alt ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">
+                    <div class="relative overflow-hidden rounded-xl">
+                        <img src="Lockout.jpeg" alt="Lockout - Gun Game" class="w-full transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gh-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+                            <div class="p-6 w-full">
+                                <h3 class="text-xl font-semibold">Lockout</h3>
+                                <p class="text-gray-300 mb-3">Halo-inspired gun game where each elimination gives you a new weapon</p>
+                                <a href="https://www.fortnite.com/@isthatciri/6661-3562-6272" target="_blank" class="inline-flex items-center text-gh-light-purple hover:text-white transition">
+                                    <span>Play in Fortnite</span>
+                                    <i class="fas fa-external-link-alt ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12" data-aos="fade-up" data-aos-duration="800">
+                <a href="#contact" class="px-6 py-3 bg-white/10 backdrop-blur-md rounded-md font-medium hover:bg-white/20 transition border border-white/10 inline-block">Request a Custom Project</a>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto" data-aos="zoom-in" data-aos-duration="800">
+                <div class="fluent-card p-8 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl md:text-5xl font-bold mb-4">Get In Touch</h2>
+                        <p class="text-gray-400">Ready to bring your Fortnite map idea to life? Contact us today!</p>
+                    </div>
+                    
+                    <form id="contactForm">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Your Name</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:border-gh-purple focus:outline-none text-white">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Email Address</label>
+                                <input type="email" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:border-gh-purple focus:outline-none text-white">
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium mb-2">Project Details</label>
+                            <textarea rows="5" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:border-gh-purple focus:outline-none text-white"></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="px-8 py-3 bg-gradient-to-r from-gh-purple to-gh-light-purple rounded-md font-medium hover:opacity-90 transition shadow-lg shadow-purple-500/20">Submit Request</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="bg-black py-16 border-t border-white/10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+                <div>
+                    <a href="#" class="flex items-center">
+                        <div class="w-14 h-14 mr-3 bg-gradient-to-br from-gh-purple to-gh-light-purple rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/20">
+                            <span class="text-white font-bold text-2xl">GH</span>
+                        </div>
+                        <div>
+                            <span class="text-3xl font-bold bg-gradient-to-r from-gh-purple to-gh-light-purple text-transparent bg-clip-text">Glitch Hounds</span>
+                            <p class="text-gray-400 mt-1">UEFN Fortnite Creative Team</p>
+                        </div>
+                    </a>
+                    <p class="text-gray-400 mt-4 max-w-md">
+                        We specialize in building immersive Fortnite experiences using the Unreal Editor for Fortnite (UEFN). From custom maps to innovative game mechanics, we bring your creative vision to life.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4 text-white">Connect With Us</h3>
+                    <div class="mb-4">
+                        <p class="text-gray-400 mb-2 flex items-center">
+                            <i class="fas fa-envelope text-gh-light-purple mr-2"></i>
+                            <a href="mailto:thecooldoggobusiness@gmail.com" class="hover:text-gh-light-purple transition">thecooldoggobusiness@gmail.com</a>
+                        </p>
+                        <p class="text-gray-400 mb-2 flex items-center">
+                            <i class="fas fa-globe text-gh-light-purple mr-2"></i>
+                            <a href="https://glitchhounds.games" class="hover:text-gh-light-purple transition">glitchhounds.games</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center max-w-4xl mx-auto">
+                <p class="text-gray-400 text-sm">© 2025 Glitch Hounds. All rights reserved.</p>
+                <div class="mt-4 md:mt-0 flex flex-wrap gap-6">
+                    <a href="https://fortnite.com/@isthatciri" class="text-gray-400 text-sm hover:text-gh-light-purple transition">Fortnite</a>
+                    <a href="https://github.com/thecooldoggo" class="text-gray-400 text-sm hover:text-gh-light-purple transition">Developer</a>
+                    <a href="#contact" class="text-gray-400 text-sm hover:text-gh-light-purple transition">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script src="script.js"></script>
     <script>
-        const { Client, Account, OAuthProvider } = Appwrite;
-        
-        const client = new Client();
-        client
-            .setEndpoint('https://discord.glitchhounds.games/v1')
-            .setProject('684439b6001f3f53a474');
-
-        const account = new Account(client);
-
-        const discordLoginButton = document.getElementById('discord-login');
-
-        const themes = {
-            purple: { start: '#7c4dff', mid: '#8A2BE2', end: '#B76EFF', shadow: 'rgba(138, 43, 226, 0.4)' },
-            red: { start: '#ff4d4d', mid: '#e60000', end: '#ff3333', shadow: 'rgba(226, 43, 43, 0.4)' },
-            orange: { start: '#ffac4d', mid: '#ff8c00', end: '#ffa500', shadow: 'rgba(226, 134, 43, 0.4)' },
-            yellow: { start: '#ffeb3b', mid: '#fbc02d', end: '#ffee58', shadow: 'rgba(226, 204, 43, 0.4)' },
-            green: { start: '#4dff88', mid: '#00b33c', end: '#33ff77', shadow: 'rgba(43, 226, 83, 0.4)' },
-            blue: { start: '#4d7eff', mid: '#004de6', end: '#3366ff', shadow: 'rgba(43, 95, 226, 0.4)' },
-        };
-
-        function getCookie(name) {
-            const nameEQ = name + "=";
-            const ca = document.cookie.split(';');
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
-
-        function applyTheme(themeName) {
-            const theme = themes[themeName] || themes.purple;
-            const root = document.documentElement;
-            root.style.setProperty('--theme-color-start', theme.start);
-            root.style.setProperty('--theme-color-mid', theme.mid);
-            root.style.setProperty('--theme-color-end', theme.end);
-            root.style.setProperty('--theme-shadow', theme.shadow);
-        }
-
-        // Apply theme on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = getCookie('shopTheme');
-            if (savedTheme) {
-                applyTheme(savedTheme);
-            }
-        });
-
-        discordLoginButton.addEventListener('click', () => {
-            account.createOAuth2Session(
-                OAuthProvider.Discord,
-                'discord/shop.html', // Success URL
-                'discord/index.html', // Failure URL
-                ['identify', 'email'] // Scopes
-            );
-        });
-
-        const contactForm = document.querySelector('#contactForm');
+    const contactForm = document.querySelector('#contactForm');
     
     if (contactForm) {
         const { Client, Functions, ID } = Appwrite;
         const client = new Client()
-            .setEndpoint('https://discord.glitchhounds.games/v1') // Your Appwrite Endpoint
-            .setProject('684439b6001f3f53a474'); // Your Appwrite Project ID
+            .setEndpoint('https://discord.glitchhounds.games/v1')
+            .setProject('684439b6001f3f53a474');
 
         const functions = new Functions(client);
 
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const name = document.querySelector('#name').value.trim();
-            const email = document.querySelector('#email').value.trim();
-            const message = document.querySelector('#message').value.trim();
-            const submitButton = document.querySelector('button[type="submit"]');
+            const name = contactForm.querySelector('input[type="text"]').value.trim();
+            const email = contactForm.querySelector('input[type="email"]').value.trim();
+            const message = contactForm.querySelector('textarea').value.trim();
+            const submitButton = contactForm.querySelector('button[type="submit"]');
             const originalButtonText = submitButton.innerHTML;
             
-            // Simple client-side validation
             if (!name || !email || !message) {
                 return showFluentNotification('Please fill in all fields', 'error');
             }
@@ -171,6 +470,5 @@
         });
     }
     </script>
-
 </body>
 </html>
