@@ -181,6 +181,16 @@
         // --- Main Initialization Function ---
         async function initializeShop() {
             try {
+                const urlParams = new URLSearchParams(window.location.hash.substring(1));
+                const userId = urlParams.get('userId');
+                const secret = urlParams.get('secret');
+
+                if (userId && secret) {
+                    await account.createSession(userId, secret);
+                    // Clean the URL to remove the token details
+                    window.history.replaceState(null, '', window.location.pathname + window.location.search);
+                }
+
                 const user = await account.get();
 
                 await loadShopData(user);
@@ -197,7 +207,6 @@
                 if (loaderSpinner) loaderSpinner.classList.add('hidden');
                 loaderText.textContent = "Authentication Required";
                 loaderPara.innerHTML = 'Please log in to access the shop. <br/><br/> <a href="index.html" class="bg-purple-600 px-4 py-2 rounded-lg hover:bg-purple-700">Go to Login</a>';
-                location.reload();
             }
         }
 
@@ -444,7 +453,6 @@
             }, 250);
         }
 
-        // --- Start the process when the page loads ---
         document.addEventListener('DOMContentLoaded', initializeShop);
 
     </script>
