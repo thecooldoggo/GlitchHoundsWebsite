@@ -118,6 +118,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    const { Client, Functions } = Appwrite;
+    const client = new Client()
+        .setEndpoint('https://discord.glitchhounds.games/v1')
+        .setProject('684439b6001f3f53a474');
+    const functions = new Functions(client);
+    
     const contactForm = document.querySelector('#contactForm');
     
     if (contactForm) {
@@ -147,17 +153,17 @@ document.addEventListener('DOMContentLoaded', function() {
             addRippleEffect(submitButton);
             
             try {
-                const response = await fetch('/pages/api/contact.js', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ name, email, message }),
-                });
+                const result = await functions.createExecution(
+                    '687d3431002b73460e6c',
+                    JSON.stringify({ name, email, message }),
+                    false,
+                    '/',
+                    'POST'
+                );
 
-                const data = await response.json();
+                const data = JSON.parse(result.responseBody);
                 
-                if (response.ok) {
+                if (data.success) {
                     contactForm.reset();
                     submitButton.innerHTML = '<i class="fas fa-check mr-2"></i> Message Sent!';
                     showFluentNotification('Your message has been sent successfully!', 'success');
