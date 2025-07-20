@@ -28,8 +28,6 @@
     
     <link rel="stylesheet" href="styles.css">
     
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@15.0.0"></script>
-    
     <script>
         tailwind.config = {
             theme: {
@@ -412,63 +410,5 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <script src="script.js"></script>
-    <script>
-    const contactForm = document.querySelector('#contactForm');
-    
-    if (contactForm) {
-        const { Client, Functions, ID } = Appwrite;
-        const client = new Client()
-            .setEndpoint('https://discord.glitchhounds.games/v1')
-            .setProject('684439b6001f3f53a474');
-
-        const functions = new Functions(client);
-
-        contactForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const name = contactForm.querySelector('input[type="text"]').value.trim();
-            const email = contactForm.querySelector('input[type="email"]').value.trim();
-            const message = contactForm.querySelector('textarea').value.trim();
-            const submitButton = contactForm.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.innerHTML;
-            
-            if (!name || !email || !message) {
-                return showFluentNotification('Please fill in all fields', 'error');
-            }
-            
-            submitButton.disabled = true;
-            
-            addRippleEffect(submitButton);
-            
-            try {
-                const response = await functions.createExecution(
-                    '687d3431002b73460e6c',
-                    JSON.stringify({ name, email, message }),
-                    false
-                );
-
-                const data = JSON.parse(response.responseBody);
-                
-                if (response.status === 'completed' && data.success) {
-                    contactForm.reset();
-                    submitButton.innerHTML = '<i class="fas fa-check mr-2"></i> Message Sent!';
-                    showFluentNotification('Your message has been sent successfully!', 'success');
-                } else {
-                    showFluentNotification(data.error || 'Failed to send message', 'error');
-                    submitButton.innerHTML = originalButtonText;
-                }
-            } catch (error) {
-                console.error('Appwrite execution error:', error);
-                showFluentNotification('Failed to connect to server', 'error');
-                submitButton.innerHTML = originalButtonText;
-            }
-            
-            setTimeout(() => {
-                submitButton.disabled = false;
-                submitButton.innerHTML = originalButtonText;
-            }, 3000);
-        });
-    }
-    </script>
 </body>
 </html>
