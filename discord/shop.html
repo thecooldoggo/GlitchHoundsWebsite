@@ -180,19 +180,26 @@
 
         // --- Main Initialization Function ---
         async function initializeShop() {
-            try {
-                const urlParams = new URLSearchParams(window.location.hash.substring(1));
-                const userId = urlParams.get('userId');
-                const secret = urlParams.get('secret');
+            const urlParams = new URLSearchParams(window.location.hash.substring(1));
+            const userId = urlParams.get('userId');
+            const secret = urlParams.get('secret');
 
-                if (userId && secret) {
+            // If login tokens are in the URL, create the session and reload the page.
+            if (userId && secret) {
+                try {
                     await account.createSession(userId, secret);
-                    // Clean the URL to remove the token details
-                    window.history.replaceState(null, '', window.location.pathname + window.location.search);
+                    // Redirect to the clean URL to force a reload with the new session active.
+                    window.location.href = window.location.pathname + window.location.search;
+                    return; // Stop execution to allow the page to reload.
+                } catch (e) {
+                    console.error("Failed to create session from URL token:", e);
+                    // If session creation fails, fall through to the standard error display.
                 }
+            }
 
+            try {
                 const user = await account.get();
-
+                
                 await loadShopData(user);
 
                 loader.classList.add('hidden');
