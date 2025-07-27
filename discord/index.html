@@ -120,7 +120,7 @@
         });
 
         discordLoginButton.addEventListener('click', () => {
-            account.createOAuth2Token(
+            account.createOAuth2Session(
                 OAuthProvider.Discord,
                 'https://glitchhounds.games/discord/shop.html', // Success URL
                 'https://glitchhounds.games/discord/index.html', // Failure
