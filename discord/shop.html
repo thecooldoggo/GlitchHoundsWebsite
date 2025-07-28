@@ -168,6 +168,7 @@
         let currentBalance = 0;
         let selectedItem = null;
         let discordUserId = null;
+        let discordUsername = null;
 
         const themes = {
             purple: { start: '#7c4dff', mid: '#8A2BE2', end: '#B76EFF', shadow: 'rgba(138, 43, 226, 0.4)' },
@@ -201,7 +202,8 @@
                 const user = await account.get();
                 
                 await loadShopData(user);
-
+                
+                discordUsername = user.name;
                 loader.classList.add('hidden');
                 mainContent.classList.remove('hidden');
 
@@ -366,7 +368,8 @@
                     PURCHASE_FUNCTION_ID,
                     JSON.stringify({ 
                         itemId: selectedItem.id,
-                        discordId: discordUserId
+                        discordId: discordUserId,
+                        username: discordUsername
                     }),
                     false, 
                     '/',
