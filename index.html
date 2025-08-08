@@ -16,37 +16,287 @@
     <link rel="icon" type="image/png" href="GHPurple.png">
     <link rel="apple-touch-icon" href="GHPurple.png">
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Inline Tailwind-like utility classes -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        /* Reset and base styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Utility classes for layout */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        .flex { display: flex; }
+        .grid { display: grid; }
+        .block { display: block; }
+        .hidden { display: none; }
+        .relative { position: relative; }
+        .absolute { position: absolute; }
+        .fixed { position: fixed; }
+        .sticky { position: sticky; }
+        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+        .top-0 { top: 0; }
+        .z-50 { z-index: 50; }
+        .z-10 { z-index: 10; }
+        .z-0 { z-index: 0; }
+        .overflow-hidden { overflow: hidden; }
+        
+        /* Flexbox utilities */
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .items-center { align-items: center; }
+        .items-end { align-items: flex-end; }
+        .flex-col { flex-direction: column; }
+        .flex-wrap { flex-wrap: wrap; }
+        .space-x-8 > * + * { margin-left: 2rem; }
+        .space-x-4 > * + * { margin-left: 1rem; }
+        .space-y-4 > * + * { margin-top: 1rem; }
+        
+        /* Grid utilities */
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .gap-4 { gap: 1rem; }
+        .gap-6 { gap: 1.5rem; }
+        .gap-8 { gap: 2rem; }
+        .gap-12 { gap: 3rem; }
+        
+        /* Spacing */
+        .p-1 { padding: 0.25rem; }
+        .p-4 { padding: 1rem; }
+        .p-6 { padding: 1.5rem; }
+        .p-8 { padding: 2rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+        .px-8 { padding-left: 2rem; padding-right: 2rem; }
+        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+        .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+        .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+        .pt-8 { padding-top: 2rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mb-16 { margin-bottom: 4rem; }
+        .mr-2 { margin-right: 0.5rem; }
+        .mr-3 { margin-right: 0.75rem; }
+        .ml-2 { margin-left: 0.5rem; }
+        .mt-1 { margin-top: 0.25rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mt-12 { margin-top: 3rem; }
+        
+        /* Sizing */
+        .w-10 { width: 2.5rem; }
+        .w-12 { width: 3rem; }
+        .w-14 { width: 3.5rem; }
+        .w-16 { width: 4rem; }
+        .w-24 { width: 6rem; }
+        .w-full { width: 100%; }
+        .h-10 { height: 2.5rem; }
+        .h-12 { height: 3rem; }
+        .h-14 { height: 3.5rem; }
+        .h-16 { height: 4rem; }
+        .h-24 { height: 6rem; }
+        .h-full { height: 100%; }
+        .max-w-md { max-width: 28rem; }
+        .max-w-2xl { max-width: 42rem; }
+        .max-w-4xl { max-width: 56rem; }
+        
+        /* Typography */
+        .text-sm { font-size: 0.875rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .text-3xl { font-size: 1.875rem; }
+        .text-4xl { font-size: 2.25rem; }
+        .text-5xl { font-size: 3rem; }
+        .text-6xl { font-size: 3.75rem; }
+        .font-medium { font-weight: 500; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+        .text-center { text-align: center; }
+        .text-white { color: white; }
+        .text-gray-300 { color: #d1d5db; }
+        .text-gray-400 { color: #9ca3af; }
+        
+        /* Background colors */
+        .bg-black { background-color: #000; }
+        .bg-white { background-color: #fff; }
+        .bg-gh-dark { background-color: #121212; }
+        .bg-gh-purple { background-color: #8A2BE2; }
+        .bg-gh-light-purple { background-color: #B76EFF; }
+        
+        /* Gradients */
+        .bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-stops)); }
+        .bg-gradient-to-b { background-image: linear-gradient(to bottom, var(--tw-gradient-stops)); }
+        .bg-gradient-to-br { background-image: linear-gradient(to bottom right, var(--tw-gradient-stops)); }
+        .from-gh-purple { --tw-gradient-from: #8A2BE2; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(138, 43, 226, 0)); }
+        .to-gh-light-purple { --tw-gradient-to: #B76EFF; }
+        .to-transparent { --tw-gradient-to: transparent; }
+        .from-black { --tw-gradient-from: #000; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(0, 0, 0, 0)); }
+        .to-gh-dark { --tw-gradient-to: #121212; }
+        
+        /* Text gradients */
+        .text-transparent { color: transparent; }
+        .bg-clip-text { -webkit-background-clip: text; background-clip: text; }
+        
+        /* Borders */
+        .border { border-width: 1px; }
+        .border-t { border-top-width: 1px; }
+        .border-b { border-bottom-width: 1px; }
+        .border-white\/10 { border-color: rgba(255, 255, 255, 0.1); }
+        .border-white\/20 { border-color: rgba(255, 255, 255, 0.2); }
+        .border-purple-900\/30 { border-color: rgba(76, 29, 149, 0.3); }
+        .border-purple-500\/20 { border-color: rgba(139, 92, 246, 0.2); }
+        .border-gh-purple\/50 { border-color: rgba(138, 43, 226, 0.5); }
+        
+        /* Border radius */
+        .rounded-md { border-radius: 0.375rem; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .rounded-xl { border-radius: 0.75rem; }
+        .rounded-full { border-radius: 9999px; }
+        
+        /* Backdrop effects */
+        .backdrop-blur-md { backdrop-filter: blur(12px); }
+        .backdrop-blur-sm { backdrop-filter: blur(4px); }
+        .backdrop-blur-lg { backdrop-filter: blur(16px); }
+        
+        /* Opacity */
+        .opacity-0 { opacity: 0; }
+        .opacity-30 { opacity: 0.3; }
+        .opacity-40 { opacity: 0.4; }
+        .opacity-75 { opacity: 0.75; }
+        .opacity-90 { opacity: 0.9; }
+        
+        /* Transform */
+        .transform { transform: var(--tw-transform); }
+        .scale-110 { --tw-scale-x: 1.1; --tw-scale-y: 1.1; transform: scale(var(--tw-scale-x), var(--tw-scale-y)); }
+        .translate-y-0 { --tw-translate-y: 0px; transform: translateY(var(--tw-translate-y)); }
+        .-translate-y-4 { --tw-translate-y: -1rem; transform: translateY(var(--tw-translate-y)); }
+        .translate-y-4 { --tw-translate-y: 1rem; transform: translateY(var(--tw-translate-y)); }
+        .translateY-5px { transform: translateY(-5px); }
+        
+        /* Transitions */
+        .transition { transition: all 0.3s ease; }
+        .transition-all { transition: all 0.3s ease; }
+        .transition-opacity { transition: opacity 0.3s ease; }
+        .duration-200 { transition-duration: 0.2s; }
+        .duration-300 { transition-duration: 0.3s; }
+        .duration-500 { transition-duration: 0.5s; }
+        .duration-800 { transition-duration: 0.8s; }
+        .duration-1000 { transition-duration: 1s; }
+        .ease-out { transition-timing-function: ease-out; }
+        .ease-in { transition-timing-function: ease-in; }
+        
+        /* Hover effects */
+        .hover\:text-gh-light-purple:hover { color: #B76EFF; }
+        .hover\:text-white:hover { color: white; }
+        .hover\:bg-white\/20:hover { background-color: rgba(255, 255, 255, 0.2); }
+        .hover\:opacity-90:hover { opacity: 0.9; }
+        .hover\:border-gh-purple\/50:hover { border-color: rgba(138, 43, 226, 0.5); }
+        .hover\:scale-110:hover { transform: scale(1.1); }
+        
+        /* Group hover */
+        .group:hover .group-hover\:scale-110 { transform: scale(1.1); }
+        .group:hover .group-hover\:opacity-100 { opacity: 1; }
+        
+        /* Shadows */
+        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        .shadow-purple-500\/20 { box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.2); }
+        .shadow-purple-500\/10 { box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.1); }
+        
+        /* Focus styles */
+        .focus\:outline-none:focus { outline: none; }
+        .focus\:border-gh-purple:focus { border-color: #8A2BE2; }
+        
+        /* Responsive design */
+        @media (min-width: 768px) {
+            .md\:flex { display: flex; }
+            .md\:hidden { display: none; }
+            .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .md\:text-left { text-align: left; }
+            .md\:text-5xl { font-size: 3rem; }
+            .md\:text-6xl { font-size: 3.75rem; }
+            .md\:justify-start { justify-content: flex-start; }
+            .md\:order-1 { order: 1; }
+            .md\:order-2 { order: 2; }
+            .md\:block { display: block; }
+            .md\:flex-row { flex-direction: row; }
+            .md\:mt-0 { margin-top: 0; }
+        }
+        
+        @media (min-width: 1024px) {
+            .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        }
+        
+        /* Custom animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .animate-fadeIn { animation: fadeIn 0.8s ease-out; }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        
+        /* Special background effects */
+        .bg-white\/5 { background-color: rgba(255, 255, 255, 0.05); }
+        .bg-white\/10 { background-color: rgba(255, 255, 255, 0.1); }
+        .bg-white\/20 { background-color: rgba(255, 255, 255, 0.2); }
+        .bg-gh-dark\/80 { background-color: rgba(18, 18, 18, 0.8); }
+        .bg-gh-dark\/90 { background-color: rgba(18, 18, 18, 0.9); }
+        .bg-gh-dark\/95 { background-color: rgba(18, 18, 18, 0.95); }
+        .bg-gh-dark\/60 { background-color: rgba(18, 18, 18, 0.6); }
+        .bg-black\/40 { background-color: rgba(0, 0, 0, 0.4); }
+        .bg-gh-purple\/40 { background-color: rgba(138, 43, 226, 0.4); }
+        
+        /* Font awesome icons fallback */
+        .fas::before {
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+        }
+        .fa-bars::before { content: '☰'; }
+        .fa-times::before { content: '✕'; }
+        .fa-play::before { content: '▶'; }
+        .fa-arrow-right::before { content: '→'; }
+        .fa-envelope::before { content: '✉'; }
+        .fa-globe::before { content: '🌐'; }
+        .fa-map::before { content: '🗺'; }
+        .fa-code::before { content: '</>'; }
+        .fa-laptop-code::before { content: '💻'; }
+        .fa-external-link-alt::before { content: '↗'; }
+        .fa-spinner::before { content: '⟳'; }
+        .fa-check::before { content: '✓'; }
+        .fa-arrow-up::before { content: '↑'; }
+        .fa-spin { animation: spin 1s linear infinite; }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
     
     <link rel="stylesheet" href="styles.css">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'gh-purple': '#8A2BE2',
-                        'gh-dark': '#121212',
-                        'gh-light-purple': '#B76EFF'
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
+
 </head>
 <body class="bg-gh-dark text-white font-sans">
-    <nav class="bg-gh-dark/80 backdrop-blur-md border-b border-purple-900/30 sticky top-0 z-50" x-data="{ mobileMenuOpen: false }">
+    <nav class="bg-gh-dark/80 backdrop-blur-md border-b border-purple-900/30 sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
                 <div class="flex items-center">
@@ -68,28 +318,21 @@
                 </div>
                 
                 <div class="md:hidden">
-                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-white focus:outline-none">
-                        <i x-show="!mobileMenuOpen" class="fas fa-bars text-xl"></i>
-                        <i x-show="mobileMenuOpen" class="fas fa-times text-xl"></i>
+                    <button id="mobile-menu-button" class="text-white focus:outline-none">
+                        <i id="menu-bars-icon" class="fas fa-bars text-xl"></i>
+                        <i id="menu-times-icon" class="fas fa-times text-xl" style="display: none;"></i>
                     </button>
                 </div>
             </div>
             
-            <div x-show="mobileMenuOpen" 
-                 x-transition:enter="transition ease-out duration-300"
-                 x-transition:enter-start="opacity-0 transform -translate-y-4"
-                 x-transition:enter-end="opacity-100 transform translate-y-0"
-                 x-transition:leave="transition ease-in duration-200"
-                 x-transition:leave-start="opacity-100 transform translate-y-0"
-                 x-transition:leave-end="opacity-0 transform -translate-y-4"
-                 @click.away="mobileMenuOpen = false"
+            <div id="mobile-menu" style="display: none;"
                  class="md:hidden mt-4 p-4 bg-gh-dark/90 backdrop-blur-lg rounded-lg border border-purple-900/30 absolute top-full left-0 right-0 mx-4">
                 <div class="flex flex-col space-y-4 text-center">
-                    <a href="#" @click="mobileMenuOpen = false" class="block text-white hover:text-gh-light-purple transition py-2">Home</a>
-                    <a href="#about" @click="mobileMenuOpen = false" class="block text-white hover:text-gh-light-purple transition py-2">About</a>
-                    <a href="#services" @click="mobileMenuOpen = false" class="block text-white hover:text-gh-light-purple transition py-2">Services</a>
-                    <a href="#portfolio" @click="mobileMenuOpen = false" class="block text-white hover:text-gh-light-purple transition py-2">Portfolio</a>
-                    <a href="#contact" @click="mobileMenuOpen = false" class="block text-white hover:text-gh-light-purple transition py-2">Contact</a>
+                    <a href="#" class="block text-white hover:text-gh-light-purple transition py-2">Home</a>
+                    <a href="#about" class="block text-white hover:text-gh-light-purple transition py-2">About</a>
+                    <a href="#services" class="block text-white hover:text-gh-light-purple transition py-2">Services</a>
+                    <a href="#portfolio" class="block text-white hover:text-gh-light-purple transition py-2">Portfolio</a>
+                    <a href="#contact" class="block text-white hover:text-gh-light-purple transition py-2">Contact</a>
                     <a href="discord/index.html" class="mt-2 block px-6 py-3 bg-gradient-to-r from-gh-purple to-gh-light-purple rounded-md font-medium hover:opacity-90 transition shadow-lg shadow-purple-500/20">Login</a>
                 </div>
             </div>
@@ -99,19 +342,19 @@
     <section class="py-20 acrylic-panel relative">
         <div class="container mx-auto px-4 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div data-aos="fade-right" data-aos-duration="1000" class="text-center md:text-left">
+                <div class="text-center md:text-left animate-fadeIn">
                     <h1 class="text-4xl md:text-6xl font-bold mb-4">
-                        <span class="bg-gradient-to-r from-gh-purple to-gh-light-purple text-transparent bg-clip-text">Bringing Your Fortnite</span>
-                        <span class="block">Creative Vision to Life</span>
+                        <span class="hero-title">Bringing Your Fortnite</span>
+                        <span class="block text-glow">Creative Vision to Life</span>
                     </h1>
-                    <p class="text-gray-300 text-lg mb-8">Custom UEFN map creation service by the Glitch Hounds team - turning your game ideas into playable realities.</p>
-                    <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-                        <a href="#services" class="px-6 py-3 bg-gradient-to-r from-gh-purple to-gh-light-purple rounded-md font-medium hover:opacity-90 transition shadow-lg shadow-purple-500/20">Our Services</a>
-                        <a href="#portfolio" class="px-6 py-3 bg-white/10 backdrop-blur-md rounded-md font-medium hover:bg-white/20 transition border border-white/10">View Portfolio</a>
+                    <p class="text-gray-300 text-lg mb-8 animate-fadeIn">Custom UEFN map creation service by the Glitch Hounds team - turning your game ideas into playable realities.</p>
+                    <div class="flex flex-wrap gap-4 justify-center md:justify-start animate-fadeIn">
+                        <a href="#services" class="px-6 py-3 bg-gradient-to-r from-gh-purple to-gh-light-purple rounded-md font-medium hover:opacity-90 transition shadow-lg shadow-purple-500/20 pulse-glow">Our Services</a>
+                        <a href="#portfolio" class="fluent-button">View Portfolio</a>
                     </div>
                 </div>
-                <div class="hidden md:block" data-aos="fade-left" data-aos-duration="1000">
-                    <div class="fluent-card rounded-xl shadow-2xl shadow-purple-500/20 p-1 bg-gradient-to-br from-gh-purple/40 to-transparent">
+                <div class="hidden md:block animate-fadeIn">
+                    <div class="fluent-card rounded-xl shadow-2xl shadow-purple-500/20 p-1 bg-gradient-to-br from-gh-purple/40 to-transparent animate-float">
                         <div class="bg-gh-dark/80 backdrop-blur-md rounded-lg p-6 relative">
                             <img src="PelicanParkour.jpeg" alt="Pelican Parkour DEATHRUN" class="rounded-lg w-full">
                             <div class="mt-4 flex justify-between items-center">
@@ -130,10 +373,16 @@
             </div>
         </div>
         <div class="absolute inset-0 z-0 overflow-hidden">
+            <!-- Enhanced background with multiple layers -->
             <div class="mesh-gradient absolute inset-0 w-full h-full opacity-75"></div>
+            <div class="glow-orb absolute top-1/4 left-1/4"></div>
+            <div class="glow-orb absolute bottom-1/4 right-1/4" style="animation-delay: -4s;"></div>
             <div class="absolute inset-0 bg-gradient-to-b from-gh-dark/95 via-gh-dark/60 to-gh-dark/90"></div>
             <div class="absolute inset-0 bg-black/40"></div>
             <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(138,43,226,0.15),transparent_70%)]"></div>
+            
+            <!-- Floating particles container -->
+            <div class="mesh-particles" id="particles-container"></div>
         </div>
     </section>
     
@@ -160,20 +409,20 @@
                     <p class="text-gray-300 mb-6">With experience in creative map development and a deep understanding of the Fortnite ecosystem, we help creators and brands bring their unique visions to life through engaging, optimized, and innovative gameplay experiences.</p>
                     
                     <div class="grid grid-cols-2 gap-4 mb-8">
-                        <div class="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10">
-                            <div class="text-gh-light-purple text-2xl font-bold">1495+</div>
+                        <div class="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10 fluent-card">
+                            <div class="stat-number text-2xl font-bold" data-count="1495">0+</div>
                             <div class="text-gray-400">Hours of Active Playtime</div>
                         </div>
-                        <div class="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10">
-                            <div class="text-gh-light-purple text-2xl font-bold">100%</div>
+                        <div class="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10 fluent-card">
+                            <div class="stat-number text-2xl font-bold" data-count="100">0%</div>
                             <div class="text-gray-400">Client Satisfaction</div>
                         </div>
-                        <div class="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10">
-                            <div class="text-gh-light-purple text-2xl font-bold">2,163,482+</div>
+                        <div class="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10 fluent-card">
+                            <div class="stat-number text-2xl font-bold" data-count="2163482">0+</div>
                             <div class="text-gray-400">Player Impressions</div>
                         </div>
-                        <div class="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10">
-                            <div class="text-gh-light-purple text-2xl font-bold">6528+</div>
+                        <div class="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10 fluent-card">
+                            <div class="stat-number text-2xl font-bold" data-count="6528">0+</div>
                             <div class="text-gray-400">Sessions Played For 10+ Mins</div>
                         </div>
                     </div>
@@ -230,12 +479,12 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                <div class="group portfolio-item" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
                     <div class="relative overflow-hidden rounded-xl">
                         <img src="Squishy.jpeg" alt="Squishy Sanctuary" class="w-full transition duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-gh-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
                             <div class="p-6 w-full">
-                                <h3 class="text-xl font-semibold">Squishy Sanctuary</h3>
+                                <h3 class="text-xl font-semibold text-glow">Squishy Sanctuary</h3>
                                 <p class="text-gray-300 mb-3">No-Weapon scavenger hunt experience</p>
                                 <a href="https://www.fortnite.com/@glitchhounds/5680-8401-9419" target="_blank" class="inline-flex items-center text-gh-light-purple hover:text-white transition">
                                     <span>Play in Fortnite</span>
@@ -246,12 +495,12 @@
                     </div>
                 </div>
                 
-                <div class="group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                <div class="group portfolio-item" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
                     <div class="relative overflow-hidden rounded-xl">
                         <img src="FunGoatSai.jpg" alt="Fungoatsai FFA" class="w-full transition duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-gh-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
                             <div class="p-6 w-full">
-                                <h3 class="text-xl font-semibold">FunGOATsai</h3>
+                                <h3 class="text-xl font-semibold text-glow">FunGOATsai</h3>
                                 <p class="text-gray-300 mb-3">Zone-Wars inspired experience developed for Fungusai</p>
                                 <a href="https://www.fortnite.com/@glitchhounds/6340-6037-1056" target="_blank" class="inline-flex items-center text-gh-light-purple hover:text-white transition">
                                     <span>Play in Fortnite</span>
@@ -262,12 +511,12 @@
                     </div>
                 </div>
                 
-                <div class="group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                <div class="group portfolio-item" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
                     <div class="relative overflow-hidden rounded-xl">
                         <img src="ZeroBuild.jpg" alt="Zero Build FFA" class="w-full transition duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-gh-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
                             <div class="p-6 w-full">
-                                <h3 class="text-xl font-semibold">[FFA] Subway</h3>
+                                <h3 class="text-xl font-semibold text-glow">[FFA] Subway</h3>
                                 <p class="text-gray-300 mb-3">Expertly themed Free-For-All in the continental subway</p>
                                 <a href="https://www.fortnite.com/@glitchhounds/6031-2384-3735" target="_blank" class="inline-flex items-center text-gh-light-purple hover:text-white transition">
                                     <span>Play in Fortnite</span>
@@ -278,12 +527,12 @@
                     </div>
                 </div>
 
-                <div class="group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                <div class="group portfolio-item" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
                     <div class="relative overflow-hidden rounded-xl">
                         <img src="FashionShow.jpeg" alt="Creator Fashion Show" class="w-full transition duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-gh-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
                             <div class="p-6 w-full">
-                                <h3 class="text-xl font-semibold">Creator Fashion Show</h3>
+                                <h3 class="text-xl font-semibold text-glow">Creator Fashion Show</h3>
                                 <p class="text-gray-300 mb-3">Creator Fortnite Experience</p>
                                 <a href="https://www.fortnite.com/@glitchhounds/5153-7202-4863" target="_blank" class="inline-flex items-center text-gh-light-purple hover:text-white transition">
                                     <span>Play in Fortnite</span>
@@ -293,12 +542,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+                <div class="group portfolio-item" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
                     <div class="relative overflow-hidden rounded-xl">
                         <img src="NickInASpin.jpeg" alt="Nick In A Spin" class="w-full transition duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-gh-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
                             <div class="p-6 w-full">
-                                <h3 class="text-xl font-semibold">Nick In A Spin</h3>
+                                <h3 class="text-xl font-semibold text-glow">Nick In A Spin</h3>
                                 <p class="text-gray-300 mb-3">April Fools map with a Nick-spinning-orb & music</p>
                                 <a href="https://www.fortnite.com/@glitchhounds/3228-3919-6502" target="_blank" class="inline-flex items-center text-gh-light-purple hover:text-white transition">
                                     <span>Play in Fortnite</span>
@@ -308,12 +557,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">
+                <div class="group portfolio-item" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">
                     <div class="relative overflow-hidden rounded-xl">
                         <img src="Lockout.jpeg" alt="Lockout - Gun Game" class="w-full transition duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-gh-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
                             <div class="p-6 w-full">
-                                <h3 class="text-xl font-semibold">Lockout</h3>
+                                <h3 class="text-xl font-semibold text-glow">Lockout</h3>
                                 <p class="text-gray-300 mb-3">Halo-inspired gun game where each elimination gives you a new weapon</p>
                                 <a href="https://www.fortnite.com/@glitchhounds/6661-3562-6272" target="_blank" class="inline-flex items-center text-gh-light-purple hover:text-white transition">
                                     <span>Play in Fortnite</span>
@@ -407,8 +656,6 @@
         </div>
     </footer>
     
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@15.0.0"></script>
     
     <script src="script.js"></script>
 </body>
