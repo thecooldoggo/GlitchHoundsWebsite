@@ -4,6 +4,19 @@ body {
   overflow-x: hidden;
 }
 
+/* Theme tokens */
+:root {
+  /* Legacy purples retained for accents */
+  --gh-purple: #8A2BE2;
+  --gh-light-purple: #B76EFF;
+
+  /* New primary gradient */
+  --gh-grad-start: #c000e5; /* magenta */
+  --gh-grad-end:   #1c00b6; /* indigo */
+  /* Slightly lighter end for text legibility on dark */
+  --gh-grad-end-soft: #3f1fe2; /* bright indigo */
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -28,7 +41,7 @@ body {
 
 .mesh-gradient {
   background: 
-    linear-gradient(-45deg, #8A2BE2, #B76EFF, #6A5ACD, #4B0082),
+    linear-gradient(-45deg, var(--gh-grad-start), var(--gh-grad-end), #6A5ACD, #4B0082),
     repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(255, 255, 255, 0.03) 50px, rgba(255, 255, 255, 0.03) 51px),
     repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(255, 255, 255, 0.03) 50px, rgba(255, 255, 255, 0.03) 51px);
   background-size: 400% 400%, 100% 100%, 100% 100%;
@@ -161,13 +174,14 @@ input:focus, textarea:focus, button:focus, a:focus {
 }
 
 .gradient-animation {
-  background: linear-gradient(-45deg, #8A2BE2, #B76EFF, #9932CC, #8B008B);
+  /* Blend new gradient with legacy purples to keep brand accents */
+  background: linear-gradient(-45deg, var(--gh-grad-start), var(--gh-grad-end), #9932CC, #8B008B);
   background-size: 400% 400%;
   animation: gradient-shift 15s ease infinite;
 }
 
 .text-gradient {
-  background: linear-gradient(to right, #8A2BE2, #B76EFF);
+  background: linear-gradient(to right, var(--gh-grad-start), var(--gh-grad-end-soft));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -184,7 +198,7 @@ input:focus, textarea:focus, button:focus, a:focus {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(to right, #8A2BE2, #B76EFF);
+  background: linear-gradient(to right, var(--gh-grad-start), var(--gh-grad-end));
   transition: width 0.3s ease;
 }
 
@@ -222,6 +236,14 @@ input:focus, textarea:focus, button:focus, a:focus {
 
 .portfolio-item:hover .portfolio-overlay {
   transform: translateY(0);
+}
+
+/* Subtle portfolio link flair */
+.portfolio-overlay a:hover span {
+  background: linear-gradient(to right, var(--gh-grad-start), var(--gh-grad-end-soft));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .page-transition-enter {
@@ -304,9 +326,12 @@ html {
   bottom: 0;
   border-radius: inherit;
   padding: 2px;
-  background: linear-gradient(to right, #8A2BE2, #B76EFF);
+  background: linear-gradient(to right, var(--gh-grad-start), var(--gh-grad-end));
   -webkit-mask: 
     linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -358,7 +383,8 @@ html {
   left: -5px;
   right: -5px;
   bottom: -5px;
-  background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(183, 110, 255, 0.1));
+  /* Subtle halo updated to new gradient hues */
+  background: linear-gradient(135deg, rgba(192, 0, 229, 0.25), rgba(28, 0, 182, 0.1));
   filter: blur(8px);
   z-index: -1;
   border-radius: 12px;
@@ -389,4 +415,13 @@ html {
 
 * {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Utilities for the new gradient */
+.bg-primary-gradient {
+  background: linear-gradient(90deg, var(--gh-grad-start), var(--gh-grad-end));
+}
+
+.border-primary-gradient {
+  border-image: linear-gradient(90deg, var(--gh-grad-start), var(--gh-grad-end)) 1;
 }
