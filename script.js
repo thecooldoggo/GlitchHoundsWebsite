@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    const fluentCards = document.querySelectorAll('.fluent-card');
+    const fluentCards = document.querySelectorAll('.fluent-card:not(.no-tilt)');
     
     fluentCards.forEach(card => {
         card.addEventListener('mousemove', function(e) {
