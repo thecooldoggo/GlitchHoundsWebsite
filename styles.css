@@ -425,3 +425,12 @@ html {
 .border-primary-gradient {
   border-image: linear-gradient(90deg, var(--gh-grad-start), var(--gh-grad-end)) 1;
 }
+
+/* Disable 3D tilt and hover lift specifically on opt-out cards */
+.no-tilt,
+.no-tilt:hover {
+  transform: none !important;
+}
+.no-tilt:hover {
+  box-shadow: 0 10px 25px -5px rgba(138, 43, 226, 0.2) !important;
+}
