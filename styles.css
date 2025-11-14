@@ -434,3 +434,81 @@ html {
 .no-tilt:hover {
   box-shadow: 0 10px 25px -5px rgba(138, 43, 226, 0.2) !important;
 }
+
+.gh-glitch {
+  position: relative;
+  font-family: 'Oxanium', 'Inter', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-shadow:
+    0 0 18px rgba(138, 43, 226, 0.55),
+    2px 0 rgba(183, 110, 255, 0.45),
+    -2px 0 rgba(28, 0, 182, 0.45);
+  animation: gh-glitch-glow 7.5s ease-in-out infinite;
+}
+
+.gh-glitch::before,
+.gh-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: inherit;
+  opacity: 0.35;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.gh-glitch::before {
+  text-shadow: -1px 0 rgba(192, 0, 229, 0.6);
+  animation: gh-glitch-shift 3.3s steps(2) infinite;
+}
+
+.gh-glitch::after {
+  text-shadow: 1px 0 rgba(110, 205, 255, 0.5);
+  animation: gh-glitch-shift-alt 4s steps(3) infinite;
+}
+
+@keyframes gh-glitch-glow {
+  0%, 100% {
+    text-shadow:
+      0 0 12px rgba(138, 43, 226, 0.4),
+      2px 0 rgba(183, 110, 255, 0.35),
+      -2px 0 rgba(28, 0, 182, 0.35);
+  }
+  40% {
+    text-shadow:
+      0 0 20px rgba(183, 110, 255, 0.55),
+      3px 0 rgba(192, 0, 229, 0.45),
+      -3px 0 rgba(110, 205, 255, 0.4);
+  }
+  70% {
+    text-shadow:
+      0 0 14px rgba(138, 43, 226, 0.5),
+      1px 0 rgba(183, 110, 255, 0.4),
+      -1px 0 rgba(28, 0, 182, 0.35);
+  }
+}
+
+@keyframes gh-glitch-shift {
+  0% { transform: translate(0, 0); clip-path: inset(0 0 0 0); opacity: 0.25; }
+  15% { transform: translate(-1px, -1px); clip-path: inset(0 0 60% 0); opacity: 0.45; }
+  45% { transform: translate(1px, 1px); clip-path: inset(40% 0 0 0); opacity: 0.3; }
+  65% { transform: translate(-0.5px, 0.5px); clip-path: inset(0 0 25% 0); opacity: 0.4; }
+  100% { transform: translate(0, 0); clip-path: inset(0 0 0 0); opacity: 0.25; }
+}
+
+@keyframes gh-glitch-shift-alt {
+  0% { transform: translate(0, 0); clip-path: inset(0 0 0 0); opacity: 0.2; }
+  20% { transform: translate(1px, -0.5px); clip-path: inset(30% 0 30% 0); opacity: 0.4; }
+  55% { transform: translate(-1px, 0.5px); clip-path: inset(10% 0 50% 0); opacity: 0.32; }
+  80% { transform: translate(0.5px, -1px); clip-path: inset(60% 0 5% 0); opacity: 0.38; }
+  100% { transform: translate(0, 0); clip-path: inset(0 0 0 0); opacity: 0.2; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gh-glitch,
+  .gh-glitch::before,
+  .gh-glitch::after {
+    animation: none !important;
+  }
+}

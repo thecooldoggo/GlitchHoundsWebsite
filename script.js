@@ -1,10 +1,32 @@
 document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('[data-aos]').forEach(el => {
+    document.querySelectorAll('.gh-glitch').forEach(el => {
+        const normalized = el.textContent.replace(/\s+/g, ' ').trim();
+        el.setAttribute('data-text', normalized);
+    });
+
+    const aosElements = document.querySelectorAll('[data-aos]');
+    aosElements.forEach(el => {
         el.classList.add('aos-init');
+    });
+
+    document.querySelectorAll('[data-aos-duration]').forEach(el => {
+        const current = parseInt(el.getAttribute('data-aos-duration'), 10);
+        if (!Number.isNaN(current)) {
+            const faster = Math.max(400, Math.round(current * 0.75));
+            el.setAttribute('data-aos-duration', faster);
+        }
+    });
+
+    document.querySelectorAll('[data-aos-delay]').forEach(el => {
+        const current = parseInt(el.getAttribute('data-aos-delay'), 10);
+        if (!Number.isNaN(current) && current > 0) {
+            const trimmed = Math.max(0, Math.round(current * 0.7));
+            el.setAttribute('data-aos-delay', trimmed);
+        }
     });
     
     AOS.init({
-        duration: 800,
+        duration: 600,
         once: true,
         offset: 50,
         easing: 'ease-out-cubic',
@@ -380,7 +402,8 @@ function createScrollRevealEffects() {
     revealElements.forEach((el, index) => {
         if (!el.getAttribute('data-aos')) {
             el.classList.add('reveal-element');
-            el.style.transitionDelay = `${index * 0.05}s`;
+            const delay = Math.min(index * 0.02, 0.3);
+            el.style.transitionDelay = `${delay}s`;
             observer.observe(el);
         }
     });
@@ -392,7 +415,7 @@ function createScrollRevealEffects() {
             .reveal-element {
                 opacity: 0;
                 transform: translateY(20px);
-                transition: opacity 0.6s ease, transform 0.6s ease;
+                transition: opacity 0.45s ease, transform 0.45s ease;
             }
             .reveal-visible {
                 opacity: 1;
