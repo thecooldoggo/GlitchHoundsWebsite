@@ -6,15 +6,11 @@ body {
 
 /* Theme tokens */
 :root {
-  /* Legacy purples retained for accents */
   --gh-purple: #8A2BE2;
   --gh-light-purple: #B76EFF;
-
-  /* New primary gradient */
-  --gh-grad-start: #c000e5; /* magenta */
-  --gh-grad-end:   #1c00b6; /* indigo */
-  /* Slightly lighter end for text legibility on dark */
-  --gh-grad-end-soft: #3f1fe2; /* bright indigo */
+  --gh-grad-start: #c000e5;
+  --gh-grad-end: #1c00b6;
+  --gh-grad-end-soft: #3f1fe2;
 }
 
 ::-webkit-scrollbar {
@@ -51,6 +47,7 @@ body {
   transition: background-position 0.3s ease-out;
   will-change: background-position, transform;
 }
+
 .mesh-particles {
   position: absolute;
   top: 0;
@@ -426,6 +423,52 @@ html {
   border-image: linear-gradient(90deg, var(--gh-grad-start), var(--gh-grad-end)) 1;
 }
 
+.mobile-feature-card {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.mobile-feature-card__body {
+  background: rgba(6, 6, 6, 0.92);
+  border-radius: 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 25px -22px rgba(0, 0, 0, 0.95);
+}
+
+.mobile-feature-card__image {
+  width: 100%;
+  border-radius: 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 15px 30px -18px rgba(0, 0, 0, 0.7);
+  margin-top: 1rem;
+}
+
+.mobile-feature-card__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.85rem;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: none;
+}
+
+.mobile-feature-card__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -14px rgba(0, 0, 0, 0.7);
+}
+
+.mobile-feature-card__cta--full {
+  width: 100%;
+}
+
 /* Disable 3D tilt and hover lift specifically on opt-out cards */
 .no-tilt,
 .no-tilt:hover {
@@ -510,5 +553,18 @@ html {
   .gh-glitch::before,
   .gh-glitch::after {
     animation: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .gh-glitch {
+    letter-spacing: 0.02em;
+    text-shadow: none;
+    animation: none;
+  }
+
+  .gh-glitch::before,
+  .gh-glitch::after {
+    content: none;
   }
 }
