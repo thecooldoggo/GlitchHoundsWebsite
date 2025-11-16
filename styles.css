@@ -1,7 +1,41 @@
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   background-color: #121212;
   color: white;
+  width: 100%;
+  min-height: 100%;
   overflow-x: hidden;
+  overscroll-behavior-x: none;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+img, svg, video, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: clip;
+  }
+
+  section,
+  nav,
+  footer,
+  .container,
+  .acrylic-panel,
+  .fluent-card,
+  .mobile-feature-card__body {
+    max-width: 100%;
+  }
 }
 
 /* Theme tokens */
